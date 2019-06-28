@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import Message from './Message';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function Main() {
+  return (
+    <Router>
+      <Route
+        path="/"
+        render={({ location: { search } }) => {
+          if (search === '?message') {
+            return <Message />;
+          }
+          return <App />;
+        }}
+      />
+    </Router>
+  );
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(<Main />, document.getElementById('root'));

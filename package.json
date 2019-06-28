@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "electron-is-dev": "^1.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron electron/electron.js\"",
+    "electron": "electron electron/electron.js",
+    "electron:copy": "cp -r ./electron/. ./build",
+    "electron:build": "yarn clean && yarn build-react-and-electron && yarn electron-builder",
+    "build-react-and-electron": "yarn build && yarn electron:copy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rm -rf ./build && rm -rf ./dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +35,28 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.1",
+    "electron": "^5.0.5",
+    "electron-builder": "^20.44.4",
+    "typescript": "^3.5.2",
+    "wait-on": "^3.2.0"
+  },
+  "homepage": "./",
+  "main": "build/electron.js",
+  "build": {
+    "productName": "BURNFAT",
+    "appId": "com.victorsoares.burnfat",
+    "extends": null,
+    "files": [
+      "build/**/*"
+    ],
+    "extraMetadata": {
+      "main": "build/electron.js"
+    },
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }
