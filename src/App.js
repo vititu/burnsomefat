@@ -37,7 +37,7 @@ function App() {
       const time = `${now.getHours()}:${now.getMinutes()}`;
       const resetTime = getResetTime();
 
-      if (HOURS.includes(time)) {
+      if (HOURS.includes(time) && !hoursState[time]) {
         updateState(time);
         ipcRenderer.send('show-message');
       }
@@ -54,7 +54,9 @@ function App() {
 
   return (
     <React.Fragment>
-      <p>Burn Fat</p>
+      <button onClick={() => ipcRenderer.send('show-message')}>
+        Click to burn!
+      </button>
     </React.Fragment>
   );
 }

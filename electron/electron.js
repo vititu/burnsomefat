@@ -34,7 +34,10 @@ function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
   mainWindow.on('closed', () => (mainWindow = null));
-  mainWindow.webContents.openDevTools();
+
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 app.on('ready', () => {
@@ -57,21 +60,25 @@ app.dock.hide();
 let messageWindow;
 function createMessage() {
   messageWindow = new BrowserWindow({
-    width: 300,
-    height: 300,
+    width: 400,
+    height: 400,
     alwaysOnTop: true,
     frame: false,
+    backgroundColor: '#ffd038',
     webPreferences: {
       nodeIntegration: true
     }
   });
   messageWindow.loadURL(
     isDev
-      ? 'http://localhost:3000/message'
+      ? 'http://localhost:3000?message'
       : `file://${path.join(__dirname, '../build/index.html?message')}`
   );
   messageWindow.on('closed', () => (messageWindow = null));
-  messageWindow.show();
+  messageWindow.hide();
+  messageWindow.once('ready-to-show', function() {
+    messageWindow.show();
+  });
 }
 
 ipcMain.on('show-message', () => createMessage());
