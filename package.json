@@ -53,6 +53,9 @@
     "files": [
       "build/**/*"
     ],
+    "mac": {
+      "icon": "icons/icon.icns"
+    },
     "extraMetadata": {
       "main": "build/electron.js"
     },
