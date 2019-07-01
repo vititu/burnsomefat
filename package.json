@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron electron/electron.js\"",
-    "electron": "electron electron/electron.js",
+    "electron:dev": "electron electron/electron.js",
     "electron:copy": "cp -r ./electron/. ./build",
     "electron:build": "yarn clean && yarn build-react-and-electron && yarn electron-builder",
     "build-react-and-electron": "yarn build && yarn electron:copy",
